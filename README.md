@@ -5,7 +5,7 @@
 如果您想要利用我的这个自动化脚本根据自己的需求编译内核，请参考如下步骤：
 
 #### 1. Fork 仓库
-访问 [https://github.com/debuggerx01/kernel_deb_builder](https://github.com/kean0048/kernel_deb_builder) ，点击右上角的 `Fork` 按钮，并 clone 到本地
+访问 [https://github.com/kean0048/kernel_deb_builder](https://github.com/kean0048/kernel_deb_builder) ，点击右上角的 `Fork` 按钮，并 clone 到本地
 
 #### 2. 更新 config 文件
 在本地将您获取的 config 文件替换根目录下的 `config`，可以从您系统的 `/boot/config*` 文件复制，或者手动编辑
