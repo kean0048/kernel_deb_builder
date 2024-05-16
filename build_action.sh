@@ -15,6 +15,8 @@ apt build-dep -y linux
 # change dir to workplace
 cd "${GITHUB_WORKSPACE}" || exit
 
+rm -rf artifact 2>/dev/null # clean old packages
+
 # verify if kernel is there
 if [ -f "linux-$VERSION.tar.xz" ] && [ -f "sha256sums.asc" ]; then
     echo "Kernel is exist, verify it..."
@@ -66,17 +68,19 @@ cp ../config .config
 scripts/config --disable DEBUG_INFO
 
 # apply patches
+cp ../patch.d/*.diff ./
 # shellcheck source=src/util.sh
 source ../patch.d/*.sh
 
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
 echo "Use $CPU_CORES CPUs to compile the kernel."
+echo "------------------------------------------------------------------"
 
-yes '' | make deb-pkg -j"$CPU_CORES"
+yes '' | make bindeb-pkg -j"$CPU_CORES" | tee ../build.log
 
 # move deb packages to artifact dir
 cd ..
 rm -rfv *dbg*.deb
-mkdir "artifact"
+mkdir "artifact" 2>/dev/null
 mv ./*.deb artifact/

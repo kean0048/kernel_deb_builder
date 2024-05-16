@@ -1,0 +1,4 @@
+artifact
+*.tar.xz
+*.asc
+linux-*
